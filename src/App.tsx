@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { coinsData } from './mockData';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [amount, setAmount] = useState<number>(0);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(parseFloat(e.target.value) || 0);
+  };
+
+  const calculateGains = (rate: number): number => {
+    const monthlyRate = rate / 100;
+    return amount * Math.pow(1 + monthlyRate, 12) - amount;
+  };
+
+  const calculateTotal = (rate: number): number => {
+    return amount + calculateGains(rate);
+  };
+
+  const calculateCryptoQuantity = (price: number): number => {
+    return amount / price;
+    };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <h1>Crypto Investment Calculator</h1>
+      <input
+        type="number"
+        value={amount}
+        onChange={handleInputChange}
+        placeholder="Enter USD amount"
+      />
+      <table>
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Cryptocurrency</th>
+            <th>Annual Gain</th>
+            <th>Total</th>
+            <th>Quantity in Crypto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {coinsData.map((coin) => {
+            const gain = calculateGains(coin.rate);
+            const total = calculateTotal(coin.rate);
+            const cryptoQuantity = calculateCryptoQuantity(coin.price);
+            return (
+              <tr key={coin.id}>
+                <td>
+                  <img src={coin.logo_url} alt={`${coin.name} logo`} style={{ width: '50px' }} />
+                </td>
+                <td>{coin.name}</td>
+                <td>${gain.toFixed(2)}</td>
+                <td>${total.toFixed(2)}</td>
+                <td>{cryptoQuantity.toFixed(4)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-export default App
+export default App;
+

@@ -1,1 +1,47 @@
 
+body {  
+    /* text-align: center; */
+    font-family: "Shippori Antique", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #f0ebf9;
+    color: #6b5f73;
+}
+h1{
+    color: #7959e3;
+    font-weight: 600;
+    font-size: 15pt;
+    text-transform: uppercase;
+}
+h2{
+    color: #303740;
+}
+header{
+    width: 100%;
+    background-color: white;
+    height: 80px;
+}
+.contain-header{
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+#root{
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.jumbotron{
+    background: url(https://i.ibb.co/fXBhNh4/13891848-SL-0212121-40670-59.jpg);
+    background-position-y:center
+}
+.bg-cover {
+    background-size: cover !important;
+}
+
+
+

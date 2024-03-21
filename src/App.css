@@ -1,42 +1,75 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+.tab-contain{
+  overflow-x: auto;
+}
+table {
+  display: block;
+  width: 100%;
+  border-collapse: collapse; 
+  padding: 10px;
+  min-width: 500px;
+}
+th, td{
+  width: 21%;
+  padding: 8px;
+  text-align: center; 
+}
+thead{
+  width: 100%;
+}
+tbody{
+  width: 100%;
+}
+tr {
+  width: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.input-USD-amount{
+  width: 50%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn-export{
+  color: white;
+  border-radius: 50px;
+  padding: 3px 30px;
+  width: 30%;
+}
+.btn-pdf{
+  background-color: rgb(247, 83, 83);
+}
+.btn-csv{
+  background-color: rgb(44, 156, 57);
+}
+.btn-json{
+  background-color: rgb(121, 89, 227);
+}
+.btn-pdf:hover{
+  background-color: rgb(187, 52, 52);
+}
+.btn-csv:hover{
+  background-color: rgb(23, 109, 33);
+}
+.btn-json:hover{
+  background-color: rgb(73, 49, 153);
+}
+
+.btn:hover {
+  color: white;
+}
+
+.tab-contain {
+  background-color: white;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 5px 15px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .input-USD-amount{
+    width: 100% !important;
   }
-  to {
-    transform: rotate(360deg);
+  .btn-export{
+    align-content: initial;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { VITE_API_URL } from './constants';
 
 type Coin = {
   _id: string;
@@ -9,12 +10,25 @@ type Coin = {
   price: number;
 };
 
+const calculateGains = (rate: number, amount: number): number => {
+  const monthlyRate = rate / 100;
+  return amount * Math.pow(1 + monthlyRate, 12) - amount;
+};
+
+const calculateTotal = (rate: number, amount: number): number => {
+  return amount + calculateGains(rate, amount);
+};
+
+const calculateCryptoQuantity = (price: number, amount: number): number => {
+  return amount / price;
+};
+
 function App() {
 
   const [coins, setCoins] = useState<Coin[]>([]);
   const [amount, setAmount] = useState(0);
 
-  const apiBaseUrl = import.meta.env.VITE_API_URL;
+  const apiBaseUrl = VITE_API_URL;
 
   useEffect(() => {
     fetch(`${apiBaseUrl}/coins`)
@@ -47,19 +61,6 @@ function App() {
       console.error(`Error downloading ${fileType}: `, error);
     }
   };
-
-  const calculateGains = (rate: number): number => {
-    const monthlyRate = rate / 100;
-    return amount * Math.pow(1 + monthlyRate, 12) - amount;
-  };
-
-  const calculateTotal = (rate: number): number => {
-    return amount + calculateGains(rate);
-  };
-
-  const calculateCryptoQuantity = (price: number): number => {
-    return amount / price;
-    };
 
   return (
     <div className="App">
@@ -99,9 +100,9 @@ function App() {
           </thead>
           <tbody>
             {coins.map((coin) => {
-              const gain = calculateGains(coin.rate);
-              const total = calculateTotal(coin.rate);
-              const cryptoQuantity = calculateCryptoQuantity(coin.price);
+              const gain = calculateGains(coin.rate, amount);
+              const total = calculateTotal(coin.rate, amount);
+              const cryptoQuantity = calculateCryptoQuantity(coin.price, amount);
               return (
                 <tr key={coin._id}>
                   <td>
@@ -123,4 +124,4 @@ function App() {
 }
 
 export default App;
-
+export { calculateGains, calculateTotal, calculateCryptoQuantity };

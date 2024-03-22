@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { cable } from './cable';
 import './App.css';
 import { VITE_API_URL } from './constants';
 
@@ -35,6 +36,23 @@ function App() {
       .then(response => response.json())
       .then(data => setCoins(data))
       .catch(error => console.error('Error fetching data: ', error));
+
+    const coinsChannel = cable.subscriptions.create('CoinsChannel', {
+      received(data: Coin) {
+        setCoins(currentCoins => {
+          const existingCoin = currentCoins.find(coin => coin._id === data._id);
+          if (existingCoin) {
+            return currentCoins.map(coin => coin._id === data._id ? data : coin);
+          } else {
+            return [...currentCoins, data];
+          }
+        });
+      },
+    });
+
+    return () => {
+      coinsChannel.unsubscribe();
+    };
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
